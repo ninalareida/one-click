@@ -1,22 +1,94 @@
 {
-    "shifts": [
-      {
-        "id": 1,
-        "day": "Monday",
-        "name": "Max Mustermann",
-        "shiftType": "Früh"
-      },
-      {
-        "id": 2,
-        "day": "Monday",
-        "name": "Anna Schmidt",
-        "shiftType": "Spät"
-      },
-      {
-        "id": 3,
-        "day": "Tuesday",
-        "name": "Lisa Müller",
-        "shiftType": "Früh"
-      }
-    ]
-  }
+  "shifts": [
+    {
+      "id": 1,
+      "day": "Monday",
+      "name": "Max Mustermann",
+      "shiftType": "Früh"
+    },
+    {
+      "id": 2,
+      "day": "Monday",
+      "name": "Anna Schmidt",
+      "shiftType": "Mittel"
+    },
+    {
+      "id": 3,
+      "day": "Monday",
+      "name": "Tom Weber",
+      "shiftType": "Spät"
+    },
+    {
+      "id": 4,
+      "day": "Tuesday",
+      "name": "Lisa Müller",
+      "shiftType": "Früh"
+    },
+    {
+      "id": 5,
+      "day": "Tuesday",
+      "name": "Markus Bauer",
+      "shiftType": "Mittel"
+    },
+    {
+      "id": 6,
+      "day": "Tuesday",
+      "name": "Sophie Krause",
+      "shiftType": "Spät"
+    },
+    {
+      "id": 7,
+      "day": "Wednesday",
+      "name": "Julia Wagner",
+      "shiftType": "Früh"
+    },
+    {
+      "id": 8,
+      "day": "Wednesday", 
+      "name": "Lukas Hartmann",
+      "shiftType": "Mittel"
+    },
+    {
+      "id": 9,
+      "day": "Wednesday",
+      "name": "Emma Fischer",
+      "shiftType": "Spät"
+    },
+    {
+      "id": 10,
+      "day": "Thursday",
+      "name": "Ben Keller",
+      "shiftType": "Früh"
+    },
+    {
+      "id": 11,
+      "day": "Thursday",
+      "name": "Laura Schmidt",
+      "shiftType": "Mittel"
+    },
+    {
+      "id": 12,
+      "day": "Thursday",
+      "name": "Philipp Meier", 
+      "shiftType": "Spät"
+    },
+    {
+      "id": 13,
+      "day": "Friday",
+      "name": "Sarah Schneider",
+      "shiftType": "Früh"
+    },
+    {
+      "id": 14,
+      "day": "Friday",
+      "name": "Lena Bauer",
+      "shiftType": "Mittel"  
+    },
+    {
+      "id": 15,
+      "day": "Friday",
+      "name": "Jonas Hoffmann",
+      "shiftType": "Spät"
+    }
+  ]
+}
