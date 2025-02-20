@@ -1,0 +1,22 @@
+{
+    "shifts": [
+      {
+        "id": 1,
+        "day": "Monday",
+        "name": "Max Mustermann",
+        "shiftType": "Früh"
+      },
+      {
+        "id": 2,
+        "day": "Monday",
+        "name": "Anna Schmidt",
+        "shiftType": "Spät"
+      },
+      {
+        "id": 3,
+        "day": "Tuesday",
+        "name": "Lisa Müller",
+        "shiftType": "Früh"
+      }
+    ]
+  }
