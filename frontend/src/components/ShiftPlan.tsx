@@ -4,12 +4,16 @@ import { ShiftData } from '../types/api.types';
 import ShiftService from '../services/api.ts';
 import Shift from './Shift.tsx';
 
+// Das ShiftPlan Component dient der Anzeige der Schichten der Woche.
 const ShiftPlan = (props: ShiftPlanProps) => {
+
+  // States initialisieren
   const [shifts, setShifts] = useState<ShiftData[]>([]);
   const [days, setDays] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // useEffect-Hook holt Schichtdaten und verfügbare Tage beim ersten Laden ab
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,6 +29,7 @@ const ShiftPlan = (props: ShiftPlanProps) => {
         
         setLoading(false);
       } catch (err) {
+        // Fehlerbehandlung: Überprüfen, ob der Fehler eine Instanz von Error ist
         const errorMessage = err instanceof Error 
           ? err.message 
           : 'Fehler beim Laden der Daten. Bitte versuchen Sie es später erneut.';
@@ -43,14 +48,17 @@ const ShiftPlan = (props: ShiftPlanProps) => {
     return shifts.filter(shift => shift.day === day);
   };
 
+  // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
   if (loading) {
     return <div className="loading">Daten werden geladen...</div>;
   }
 
+  // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
   if (error) {
     return <div className="error">{error}</div>;
   }
 
+  // Anzeige der Schichten für jeden Tag
   return (
     <div className="schedule">
       {days.map((day: string) => (
