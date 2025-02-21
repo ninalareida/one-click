@@ -1,0 +1,22 @@
+{
+    "employees": [
+      {
+        "id": 1,
+        "name": "Max Mustermann",
+        "position": "Verkäufer",
+        "department": "Vertrieb"
+      },
+      {
+        "id": 2,
+        "name": "Anna Schmidt",
+        "position": "Kassiererin",
+        "department": "Kasse"
+      },
+      {
+        "id": 3,
+        "name": "Lisa Müller",
+        "position": "Lagerarbeiter",
+        "department": "Lager"
+      }
+    ]
+  }
