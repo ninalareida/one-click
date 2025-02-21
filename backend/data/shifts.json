@@ -4,91 +4,91 @@
       "id": 1,
       "day": "Monday",
       "name": "Max Mustermann",
-      "shiftType": "Früh"
+      "shiftType": "early"
     },
     {
       "id": 2,
       "day": "Monday",
       "name": "Anna Schmidt",
-      "shiftType": "Mittel"
+      "shiftType": "middle"
     },
     {
       "id": 3,
       "day": "Monday",
       "name": "Tom Weber",
-      "shiftType": "Spät"
+      "shiftType": "late"
     },
     {
       "id": 4,
       "day": "Tuesday",
       "name": "Lisa Müller",
-      "shiftType": "Früh"
+      "shiftType": "early"
     },
     {
       "id": 5,
       "day": "Tuesday",
       "name": "Markus Bauer",
-      "shiftType": "Mittel"
+      "shiftType": "middle"
     },
     {
       "id": 6,
       "day": "Tuesday",
       "name": "Sophie Krause",
-      "shiftType": "Spät"
+      "shiftType": "late"
     },
     {
       "id": 7,
       "day": "Wednesday",
       "name": "Julia Wagner",
-      "shiftType": "Früh"
+      "shiftType": "early"
     },
     {
       "id": 8,
       "day": "Wednesday", 
       "name": "Lukas Hartmann",
-      "shiftType": "Mittel"
+      "shiftType": "middle"
     },
     {
       "id": 9,
       "day": "Wednesday",
       "name": "Emma Fischer",
-      "shiftType": "Spät"
+      "shiftType": "late"
     },
     {
       "id": 10,
       "day": "Thursday",
       "name": "Ben Keller",
-      "shiftType": "Früh"
+      "shiftType": "early"
     },
     {
       "id": 11,
       "day": "Thursday",
       "name": "Laura Schmidt",
-      "shiftType": "Mittel"
+      "shiftType": "middle"
     },
     {
       "id": 12,
       "day": "Thursday",
       "name": "Philipp Meier", 
-      "shiftType": "Spät"
+      "shiftType": "late"
     },
     {
       "id": 13,
       "day": "Friday",
       "name": "Sarah Schneider",
-      "shiftType": "Früh"
+      "shiftType": "early"
     },
     {
       "id": 14,
       "day": "Friday",
       "name": "Lena Bauer",
-      "shiftType": "Mittel"  
+      "shiftType": "middle"  
     },
     {
       "id": 15,
       "day": "Friday",
       "name": "Jonas Hoffmann",
-      "shiftType": "Spät"
+      "shiftType": "late"
     }
   ]
 }
