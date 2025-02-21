@@ -3,6 +3,7 @@ import { HeaderProps } from '../types/component.types';
 import logoImage from "../assets/logo.svg";
 
 
+// Das Header Component wird verwendet, um den Namen der Webanwendung anzuzeigen.
 const Header = (props: HeaderProps) => {
   return (
     <header className="header">

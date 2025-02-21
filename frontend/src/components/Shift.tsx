@@ -3,6 +3,7 @@ import { ShiftProps } from '../types/component.types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faMoon, faMugSaucer, faSun } from '@fortawesome/free-solid-svg-icons';
 
+// Das Shift Component dient der Anzeige jeder Schicht mit dem jeweiligen Namen und Schichttyp.
 const Shift = (props: ShiftProps) => {
 
 

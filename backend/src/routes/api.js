@@ -14,7 +14,7 @@ const dataDir = path.join(__dirname, '../../data');
 const shiftsFilePath = path.join(dataDir, 'shifts.json');
 const employeesFilePath = path.join(dataDir, 'employees.json');
 
-// API-Endpunkte für Schichten
+// API-Endpunkte zum Abrufen der Schichten
 router.get('/shifts', (req, res) => {
   try {
     const data = JSON.parse(fs.readFileSync(shiftsFilePath));
@@ -25,6 +25,7 @@ router.get('/shifts', (req, res) => {
   }
 });
 
+// API-Endpunkt zum Speichern einer Schicht
 router.post('/shifts', (req, res) => {
   try {
     const newShift = req.body;
@@ -40,7 +41,7 @@ router.post('/shifts', (req, res) => {
   }
 });
 
-// API-Endpunkte für Mitarbeiter
+// API-Endpunkte zum Abrufen der Mitarbeiter
 router.get('/employees', (req, res) => {
   try {
     const data = JSON.parse(fs.readFileSync(employeesFilePath));
@@ -51,6 +52,7 @@ router.get('/employees', (req, res) => {
   }
 });
 
+// API-Endpunkt zum Speichern eines Mitarbeiters
 router.post('/employees', (req, res) => {
   try {
     const newEmployee = req.body;
