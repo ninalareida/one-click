@@ -5,7 +5,7 @@ import { faClock, faMoon, faMugSaucer, faSun } from '@fortawesome/free-solid-svg
 
 // Das Shift Component dient der Anzeige jeder Schicht mit dem jeweiligen Namen und Schichttyp.
 const Shift = (props: ShiftProps) => {
-
+  console.log('Shift props:', props);
 
   const getIconForShiftType = () => {
     switch(props.shiftType) {
