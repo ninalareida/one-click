@@ -14,21 +14,22 @@
       "forceConsistentCasingInFileNames": true,
       "noFallthroughCasesInSwitch": true,
       "module": "esnext",
+      "allowImportingTsExtensions": true,
       "moduleResolution": "node",
       "resolveJsonModule": true,
       "isolatedModules": true,
       "noEmit": true,
       "jsx": "react-jsx",
       "typeRoots": [
-        "./node_modules/@types",
-        "./src/types"
+        "./frontend/node_modules/@types",
+        "./frontend/src/types"
       ]
     },
     "include": [
-      "src/*.ts",
-      "src/**/*.ts",
-      "src/**/*.d.ts",
-      "src/**/*.tsx"
+      "frontend/src/*.ts",
+      "frontend/src/**/*.ts",
+      "frontend/src/**/*.d.ts",
+      "frontend/src/**/*.tsx"
     ],
     "exclude": [
       "node_modules"
