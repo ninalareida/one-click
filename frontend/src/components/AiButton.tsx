@@ -18,6 +18,9 @@ const AIGenerateButton = (props: AIGenerateButtonProps) => {
       setIsGenerating(true);
       
       const response = await OpenAiService.generateAIShiftPlan();
+      // response von chat gpt hat noch sätze drin die halt kein JSON sind
+      //deswegen gibt es immer fehler meldung 
+      console.log(response);
       
       if (response.success && response.data) {
         try {
