@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/backend
+/backend/.env
 /.pnp
 .pnp.js
 
@@ -24,3 +24,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+node_modules
