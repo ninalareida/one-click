@@ -2,6 +2,7 @@ import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import AIService from '../controllers/aiService.js';
 
 const router = express.Router();
 
@@ -65,6 +66,22 @@ router.post('/employees', (req, res) => {
   } catch (error) {
     console.error('Fehler beim Speichern der Mitarbeiterdaten:', error);
     res.status(500).json({ message: 'Fehler beim Speichern der Mitarbeiterdaten' });
+  }
+});
+
+
+// Neuer Route für KI-generierte Schichtpläne
+router.get('/ai-shift-plan', async (req, res) => {
+  try {
+    const aiGeneratedPlan = await AIService.generateShiftPlan();
+    res.json({ success: true, data: aiGeneratedPlan });
+  } catch (error) {
+    console.error('Fehler beim Generieren des KI-Schichtplans:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Fehler bei der KI-Schichtplan-Generierung',
+      error: error.message 
+    });
   }
 });
 
