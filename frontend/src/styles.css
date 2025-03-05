@@ -77,6 +77,64 @@ body {
   height: 120px;
 }
 
+.week-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-right: 2rem;
+  position: relative;
+}
+
+.selected-week {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.weeks-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: var(--text-light);
+  background-color: var(--day-bg);
+  border: 1px solid var(--shift-hover);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.weeks-button:hover {
+  background-color: var(--shift-hover);
+  color: var(--text-dark);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: var(--day-bg);
+  border: 1px solid var(--shift-hover);
+  border-radius: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 1000;
+  width: 120px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item {
+  padding: 0.8rem;
+  font-size: 1rem;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--shift-hover);
+  color: var(--text-dark);
+}
+
 .logo {
   height: 120px;
   width: auto;
