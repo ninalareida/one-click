@@ -32,19 +32,27 @@ const AIService = {
       const prompt = `
         Basierend auf folgenden Mitarbeiterdaten:
         ${JSON.stringify(employeesData, null, 2)}
-        
+
         Und bisherigen Schichten:
         ${JSON.stringify(shiftsData, null, 2)}
-        
+
         Erstelle einen Schichtplan für die kommende Woche. 
         Berücksichtige, dass:
         - Jeder Tag (Monday-Friday) drei Schichten haben sollte: Früh, Mittel, Spät
         - Kein Mitarbeiter sollte mehr als 5 Schichten pro Woche haben
         - Erstelle einen ausgewogenen Plan
-        
-        Formatiere die Antwort als JSON-Array mit den Eigenschaften:
-        id, day, name, shiftType
-      `;
+
+        Gib die Antwort ausschließlich als JSON-Array zurück, ohne Codeblöcke, Markdown oder Erklärungen. Nur reines JSON, wie im folgenden Beispiel:
+
+        [
+          {
+            "id": 1,
+            "day": "Monday",
+            "name": "Max Mustermann",
+            "shiftType": "early"
+          }
+        ]
+        `;
       
       // API-Anfrage an OpenAI
       const completion = await openai.chat.completions.create({
