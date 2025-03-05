@@ -19,6 +19,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@types/react": "^19.0.10",
-    "axios": "^1.7.9"
+    "axios": "^1.7.9",
+    "openai": "^4.86.1"
   }
 }
