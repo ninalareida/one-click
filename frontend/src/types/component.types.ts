@@ -5,9 +5,10 @@ export interface ShiftProps {
 }
 
 export interface HeaderProps {
-  // Für zukünftige Erweiterungen
+  selectedWeek: 'Current Week' | 'Next Week';
+  setSelectedWeek: (week: 'Current Week' | 'Next Week') => void;
 }
 
 export interface ShiftPlanProps {
-  // Für zukünftige Erweiterungen
+  week: 'Current Week' | 'Next Week';
 }

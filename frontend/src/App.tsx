@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from "./components/Header.tsx";
 import ShiftPlan from "./components/ShiftPlan.tsx";
 import "./styles.css";
 
-function App() {
+const App = () => {
+  const [selectedWeek, setSelectedWeek] = useState<'Current Week' | 'Next Week'>('Current Week');
+
   return (
     <div>
-      <Header />
-      <ShiftPlan />
+      <Header selectedWeek={selectedWeek} setSelectedWeek={setSelectedWeek} />
+      <ShiftPlan week={selectedWeek} />
     </div>
   );
-}
+};
+
 
 export default App;

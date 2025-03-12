@@ -2,25 +2,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagicWandSparkles, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 interface AIGenerateButtonProps {
-  onClick: () => void;
+  label: string;
+  onClick: () => Promise<void>;
   isLoading: boolean;
   className?: string;
+
 }
 
-const AIGenerateButton = ({ onClick, isLoading, className = '' }: AIGenerateButtonProps) => {
+const AIGenerateButton = ({ label, onClick, isLoading }: AIGenerateButtonProps) => {
   return (
     <div className="ai-button-container">
       <button 
-        className={`ai-generate-button ${className}`} 
+        className="ai-generate-button" 
         onClick={onClick} 
         disabled={isLoading}
       >
-        {isLoading ? (
-          <FontAwesomeIcon icon={faSpinner} spin className="spinner-icon" />
-        ) : (
-          <FontAwesomeIcon icon={faMagicWandSparkles} className="ai-icon" />
-        )}
-        {isLoading ? ' Generiere Schichtplan...' : ' KI-Schichtplan generieren'}
+        <FontAwesomeIcon 
+          icon={isLoading ? faSpinner : faMagicWandSparkles} 
+          className={`ai-icon ${isLoading ? 'spinner' : ''}`} 
+        />
+        {isLoading ? 'Loading...' : label}
       </button>
     </div>
   );

@@ -7,14 +7,16 @@ import Shift from './Shift.tsx';
 import AIGenerateButton from './AiButton.tsx';
 
 // Das ShiftPlan Component dient der Anzeige der Schichten der Woche.
-const ShiftPlan = (props: ShiftPlanProps) => {
+const ShiftPlan = ({ week }: ShiftPlanProps) => {
 
   // States initialisieren
   const [shifts, setShifts] = useState<ShiftData[]>([]);
+  const [nextWeekShifts, setNextWeekShifts] = useState<ShiftData[] | null>(null);
   const [days, setDays] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [generatingPlan, setGeneratingPlan] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  //const [loadingWeek, setLoadingWeek] = useState<string | null>(null);
 
   // useEffect-Hook holt Schichtdaten und verfügbare Tage beim ersten Laden ab
   useEffect(() => {
@@ -41,11 +43,9 @@ const ShiftPlan = (props: ShiftPlanProps) => {
 
   
   //Schichtplangenerierung
-  const handleGenerateAIPlan = async () => {
+  const handleGenerateAIPlan = async (targetWeek: 'Next Week' | 'Current Week') => {
     try {
-      setGeneratingPlan(true);
-      setError(null);
-
+      setIsGenerating(true);
       const response = await OpenAiService.generateAIShiftPlan();
 
       if (response.success && response.data) {
@@ -53,7 +53,11 @@ const ShiftPlan = (props: ShiftPlanProps) => {
           ? JSON.parse(response.data)
           : response.data;
 
-        setShifts(parsedData); // Update shifts only once here
+        if (targetWeek === 'Next Week') {
+          setNextWeekShifts(parsedData); // Save AI plan for Next Week
+        } else {
+          setShifts(parsedData); // Regenerate Current Week
+        }
       } else {
         setError('Fehler bei der KI-Schichtplangenerierung.');
       }
@@ -61,12 +65,13 @@ const ShiftPlan = (props: ShiftPlanProps) => {
       setError('Fehler bei der KI-Schichtplangenerierung.');
       console.error('Fehler:', err);
     } finally {
-      setGeneratingPlan(false);
+      setIsGenerating(false);
     }
   };
 
-  const getShiftsForDay = (day: string): ShiftData[] => {
-    return shifts.filter(shift => shift.day === day);
+  const getShiftsForWeek = () => {
+    if (week === 'Current Week') return shifts;
+    return nextWeekShifts || shifts; // AI plan or fallback to current week shifts
   };
 
   // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
@@ -82,19 +87,37 @@ const ShiftPlan = (props: ShiftPlanProps) => {
   // Anzeige der Schichten für jeden Tag
   return (
     <div className="schedule-container">
-      <div className="ai-button-container">
-        <AIGenerateButton
-          onClick={handleGenerateAIPlan}
-          isLoading={generatingPlan}
-          className="ai-generate-button"
-        />
-      </div>
+      {week === 'Current Week' && (
+        <div className="ai-button-container">
+          <AIGenerateButton 
+            label="Regenerate Current Week with AI" 
+            onClick={() => handleGenerateAIPlan('Current Week')} 
+            isLoading={isGenerating} 
+            className="ai-generate-button"
+          />
+          <AIGenerateButton 
+            label="Generate Next Week with AI" 
+            onClick={() => handleGenerateAIPlan('Next Week')} 
+            isLoading={isGenerating} 
+          />
+        </div>
+      )}
+
+      {week === 'Next Week' && (
+        <div className="button-container">
+          <AIGenerateButton 
+            label={nextWeekShifts ? "Regenerate Next Week with AI" : "Generate Next Week with AI"} 
+            onClick={() => handleGenerateAIPlan('Next Week')} 
+            isLoading={isGenerating} 
+          />
+        </div>
+      )}
       <div className="schedule">
-        {days.map((day) => (
+        {days.map(day => (
           <div key={day} className="day">
             <h2>{day}</h2>
             <div className="shifts">
-              {getShiftsForDay(day).map((shift) => (
+              {getShiftsForWeek().filter(shift => shift.day === day).map(shift => (
                 <Shift key={shift.id} name={shift.name} shiftType={shift.shiftType} />
               ))}
             </div>
