@@ -92,13 +92,10 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
           <AIGenerateButton 
             label="Regenerate Current Week with AI" 
             onClick={() => handleGenerateAIPlan('Current Week')} 
-            isLoading={isGenerating} 
-            className="ai-generate-button"
           />
           <AIGenerateButton 
             label="Generate Next Week with AI" 
-            onClick={() => handleGenerateAIPlan('Next Week')} 
-            isLoading={isGenerating} 
+            onClick={() => handleGenerateAIPlan('Next Week')}
           />
         </div>
       )}
@@ -107,8 +104,7 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
         <div className="button-container">
           <AIGenerateButton 
             label={nextWeekShifts ? "Regenerate Next Week with AI" : "Generate Next Week with AI"} 
-            onClick={() => handleGenerateAIPlan('Next Week')} 
-            isLoading={isGenerating} 
+            onClick={() => handleGenerateAIPlan('Next Week')}
           />
         </div>
       )}
