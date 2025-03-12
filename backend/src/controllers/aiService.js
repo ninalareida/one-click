@@ -37,10 +37,12 @@ const AIService = {
         ${JSON.stringify(shiftsData, null, 2)}
 
         Erstelle einen Schichtplan für die kommende Woche. 
-        Berücksichtige, dass:
-        - Jeder Tag (Monday-Friday) drei Schichten haben sollte: Früh, Mittel, Spät
-        - Kein Mitarbeiter sollte mehr als 5 Schichten pro Woche haben
-        - Erstelle einen ausgewogenen Plan
+        Berücksichtige dabei folgende Regeln:
+        - Jeder Tag (Monday-Friday) soll drei Schichten haben: Früh, Mittel, Spät.
+        - Kein Mitarbeiter darf mehr als 3 Schichten pro Woche haben.
+        - Verteile die Schichten gleichmäßig und setze möglichst alle Mitarbeiter ein.
+        - Vermeide es, die gleichen 3 Personen an jedem Tag zu verwenden — rotiere und variiere die Besetzung.
+        - Stelle sicher, dass so viele verschiedene Mitarbeiter wie möglich eingeplant werden.
 
         Gib die Antwort ausschließlich als JSON-Array zurück, ohne Codeblöcke, Markdown oder Erklärungen. Nur reines JSON, wie im folgenden Beispiel:
 
