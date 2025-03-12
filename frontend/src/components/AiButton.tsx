@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagicWandSparkles } from '@fortawesome/free-solid-svg-icons';
+import { faMagicWandSparkles, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 interface AIGenerateButtonProps {
   onClick: () => void;
@@ -15,8 +15,12 @@ const AIGenerateButton = ({ onClick, isLoading, className = '' }: AIGenerateButt
         onClick={onClick} 
         disabled={isLoading}
       >
-        <FontAwesomeIcon icon={faMagicWandSparkles} className="ai-icon" />
-        {isLoading ? 'Generiere Schichtplan...' : 'KI-Schichtplan generieren'}
+        {isLoading ? (
+          <FontAwesomeIcon icon={faSpinner} spin className="spinner-icon" />
+        ) : (
+          <FontAwesomeIcon icon={faMagicWandSparkles} className="ai-icon" />
+        )}
+        {isLoading ? ' Generiere Schichtplan...' : ' KI-Schichtplan generieren'}
       </button>
     </div>
   );
