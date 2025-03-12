@@ -29,81 +29,44 @@ const ShiftPlan = (props: ShiftPlanProps) => {
         // Hole Schichtdaten
         const shiftsData = await ShiftService.getAllShifts();
         setShifts(shiftsData.shifts);
-
-        setLoading(false);
       } catch (err) {
-        // Fehlerbehandlung: Überprüfen, ob der Fehler eine Instanz von Error ist
-        const errorMessage = err instanceof Error
-          ? err.message
-          : 'Fehler beim Laden der Daten. Bitte versuchen Sie es später erneut.';
-
-        setError(errorMessage);
+        setError('Fehler beim Laden der Daten.');
+        console.error('Fehler:', err);
+      } finally {
         setLoading(false);
-        console.error('Fehler beim Laden der Daten:', err);
       }
     };
-
     fetchData();
   }, []);
 
-  // Filterfunktion für Schichten nach Tag
-  const getShiftsForDay = (day: string): ShiftData[] => {
-    return shifts.filter(shift => shift.day === day);
-  };
-
-  // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
-  if (loading) {
-    return <div className="loading">Daten werden geladen...</div>;
-  }
-
-  // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
-  if (error) {
-    return <div className="error">{error}</div>;
-  }
-
+  
   //Schichtplangenerierung
   const handleGenerateAIPlan = async () => {
     try {
       setGeneratingPlan(true);
       setError(null);
 
-      const response = await OpenAiService.generateAIShiftPlan()
+      const response = await OpenAiService.generateAIShiftPlan();
 
       if (response.success && response.data) {
-        let newShifts;
+        const parsedData = typeof response.data === 'string'
+          ? JSON.parse(response.data)
+          : response.data;
 
-        try {
-          const parsedData = typeof response.data === 'string'
-            ? JSON.parse(response.data)
-            : response.data;
-
-          newShifts = parsedData;
-        } catch (parseError) {
-          console.error('Fehler beim Parsen der KI-Antwort:', parseError);
-          setError('Die KI-Antwort konnte nicht verarbeitet werden.');
-          setGeneratingPlan(false);
-          return;
-        }
-
-        setShifts(newShifts);
+        setShifts(parsedData); // Update shifts only once here
       } else {
         setError('Fehler bei der KI-Schichtplangenerierung.');
       }
-
-      setGeneratingPlan(false);
     } catch (err) {
-      const errorMessage = err instanceof Error
-        ? err.message
-        : 'Fehler bei der KI-Schichtplangenerierung. Bitte versuchen Sie es später erneut.';
-
-      setError(errorMessage);
+      setError('Fehler bei der KI-Schichtplangenerierung.');
+      console.error('Fehler:', err);
+    } finally {
       setGeneratingPlan(false);
-      console.error('Fehler bei der KI-Schichtplangenerierung:', err);
     }
   };
 
-  const handleError = (errorMessage: string) => {
-    setError(errorMessage);
+  const getShiftsForDay = (day: string): ShiftData[] => {
+    return shifts.filter(shift => shift.day === day);
   };
 
   // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
@@ -121,35 +84,25 @@ const ShiftPlan = (props: ShiftPlanProps) => {
     <div className="schedule-container">
       <div className="ai-button-container">
         <AIGenerateButton
-          onShiftsGenerated={handleGenerateAIPlan}
-          onError={handleError}
+          onClick={handleGenerateAIPlan}
+          isLoading={generatingPlan}
           className="ai-generate-button"
         />
       </div>
       <div className="schedule">
-        {days.map((day: string) => (
+        {days.map((day) => (
           <div key={day} className="day">
             <h2>{day}</h2>
             <div className="shifts">
-              {getShiftsForDay(day).length > 0 ? (
-                getShiftsForDay(day).map((shift: ShiftData) => (
-                  <React.Fragment key={shift.id}>
-                    <Shift
-                      name={shift.name}
-                      shiftType={shift.shiftType}
-                    />
-                  </React.Fragment>
-                ))
-              ) : (
-                <p className="no-shifts">Keine Schichten für diesen Tag.</p>
-              )}
+              {getShiftsForDay(day).map((shift) => (
+                <Shift key={shift.id} name={shift.name} shiftType={shift.shiftType} />
+              ))}
             </div>
           </div>
         ))}
       </div>
     </div>
   );
-
 };
 
 export default ShiftPlan;
