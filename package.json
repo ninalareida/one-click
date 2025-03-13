@@ -15,11 +15,15 @@
     "concurrently": "^9.1.2"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@types/react": "^19.0.10",
     "axios": "^1.7.9",
-    "openai": "^4.86.1"
+    "openai": "^4.86.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
