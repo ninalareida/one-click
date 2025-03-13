@@ -1,5 +1,7 @@
 
 export interface ShiftProps {
+  id: number
+  day: string;
   name: string;
   shiftType: string;
 }

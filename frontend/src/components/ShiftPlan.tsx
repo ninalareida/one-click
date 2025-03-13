@@ -5,6 +5,19 @@ import ShiftService from '../services/shiftService.ts';
 import OpenAiService from '../services/openAiService.ts';
 import Shift from './Shift.tsx';
 import AIGenerateButton from './AiButton.tsx';
+import { DndContext, DragEndEvent } from '@dnd-kit/core';
+import { useDroppable } from '@dnd-kit/core';
+
+const Day = ({ day, children }: { day: string; children: React.ReactNode }) => {
+  const { setNodeRef, isOver } = useDroppable({ id: day });
+
+  return (
+    <div ref={setNodeRef} className={`day ${isOver ? 'highlight' : ''}`}>
+      <h2>{day}</h2>
+      <div className="shifts">{children}</div>
+    </div>
+  );
+};
 
 // Das ShiftPlan Component dient der Anzeige der Schichten der Woche.
 const ShiftPlan = ({ week }: ShiftPlanProps) => {
@@ -49,14 +62,12 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
       const response = await OpenAiService.generateAIShiftPlan();
 
       if (response.success && response.data) {
-        const parsedData = typeof response.data === 'string'
-          ? JSON.parse(response.data)
-          : response.data;
-
+        const parsedData = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
+        
         if (targetWeek === 'Next Week') {
-          setNextWeekShifts(parsedData); // Save AI plan for Next Week
+          setNextWeekShifts(parsedData);
         } else {
-          setShifts(parsedData); // Regenerate Current Week
+          setShifts(parsedData);
         }
       } else {
         setError('Fehler bei der KI-Schichtplangenerierung.');
@@ -71,7 +82,26 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
 
   const getShiftsForWeek = () => {
     if (week === 'Current Week') return shifts;
-    return nextWeekShifts || shifts; // AI plan or fallback to current week shifts
+    return nextWeekShifts || shifts;
+  };
+
+  const handleDrop = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    console.log('Drag End Event:', event);
+
+    if (over) {
+      const droppedDay = over.id.toString();
+      console.log(`Shift ${active.id} dropped onto ${droppedDay}`);
+
+      setShifts((prevShifts) =>
+        prevShifts.map((shift) =>
+          shift.id.toString() === active.id ? { ...shift, day: droppedDay } : shift
+        )
+      );
+    } else {
+      console.log('No drop target (over) found.');
+    }
   };
 
   // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
@@ -86,41 +116,34 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
 
   // Anzeige der Schichten für jeden Tag
   return (
-    <div className="schedule-container">
-      {week === 'Current Week' && (
-        <div className="ai-button-container">
-          <AIGenerateButton 
-            label="Regenerate Current Week with AI" 
-            onClick={() => handleGenerateAIPlan('Current Week')} 
-          />
-          <AIGenerateButton 
-            label="Generate Next Week with AI" 
-            onClick={() => handleGenerateAIPlan('Next Week')}
-          />
-        </div>
-      )}
-
-      {week === 'Next Week' && (
-        <div className="button-container">
-          <AIGenerateButton 
-            label={nextWeekShifts ? "Regenerate Next Week with AI" : "Generate Next Week with AI"} 
-            onClick={() => handleGenerateAIPlan('Next Week')}
-          />
-        </div>
-      )}
-      <div className="schedule">
-        {days.map(day => (
-          <div key={day} className="day">
-            <h2>{day}</h2>
-            <div className="shifts">
-              {getShiftsForWeek().filter(shift => shift.day === day).map(shift => (
-                <Shift key={shift.id} name={shift.name} shiftType={shift.shiftType} />
-              ))}
-            </div>
+    <DndContext onDragEnd={handleDrop}>
+      <div className="schedule-container">
+        {week === 'Current Week' && (
+          <div className="ai-button-container">
+            <AIGenerateButton label="Regenerate Current Week with AI" onClick={() => handleGenerateAIPlan('Current Week')} />
+            <AIGenerateButton label="Generate Next Week with AI" onClick={() => handleGenerateAIPlan('Next Week')} />
           </div>
-        ))}
+        )}
+        {week === 'Next Week' && (
+          <div className="button-container">
+            <AIGenerateButton label={nextWeekShifts ? 'Regenerate Next Week with AI' : 'Generate Next Week with AI'} onClick={() => handleGenerateAIPlan('Next Week')} />
+          </div>
+        )}
+        <div className="schedule">
+          {days.map((day) => (
+            <Day key={day} day={day}>
+              <div className="shifts">
+                {getShiftsForWeek()
+                  .filter((shift) => shift.day === day)
+                  .map((shift) => (
+                    <Shift key={shift.id} id={shift.id} day={shift.day} name={shift.name} shiftType={shift.shiftType} />
+                  ))}
+              </div>
+            </Day>
+          ))}
+        </div>
       </div>
-    </div>
+    </DndContext>
   );
 };
 

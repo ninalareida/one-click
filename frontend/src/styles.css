@@ -266,6 +266,11 @@ body {
   padding: 1rem 0;
 }
 
+.shift.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+}
+
 /*AI-Button*/
 .schedule-container {
   display: flex;

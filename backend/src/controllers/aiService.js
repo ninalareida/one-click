@@ -7,6 +7,9 @@ import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 dotenv.config();
 
+// only for local development, remove for production!!!
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 // Pfade zu deinen Datendateien
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
