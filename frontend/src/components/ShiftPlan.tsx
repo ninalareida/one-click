@@ -88,32 +88,38 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
   const handleDrop = (event: DragEndEvent) => {
     const { active, over } = event;
   
-    console.log('Drag End Event:', event);
+    if (!over) return;
   
-    if (!over) {
-      console.log('No drop target (over) found.');
-      return;
-    }
+    const draggedShiftId = active.id.toString();
+    const targetShiftId = over.id.toString();
   
-    const droppedDay = over.id.toString();
-    console.log(`Shift ${active.id} dropped onto ${droppedDay}`);
+    if (draggedShiftId === targetShiftId) return;
   
-    // Update shifts for the correct week
-    const updateShifts = (prevShifts: ShiftData[] | null) => {
-      if (!prevShifts) return prevShifts; // Prevent updating null state
+    console.log(`Swapping shift names: ${draggedShiftId} ↔ ${targetShiftId}`);
   
-      return prevShifts.map((shift) =>
-        shift.id.toString() === active.id ? { ...shift, day: droppedDay } : shift
-      );
+    const swapShiftNames = (shiftsList: ShiftData[] | null) => {
+      if (!shiftsList) return shiftsList;
+  
+      return shiftsList.map((shift) => {
+        if (shift.id.toString() === draggedShiftId) {
+          const targetShift = shiftsList.find((s) => s.id.toString() === targetShiftId);
+          return targetShift ? { ...shift, name: targetShift.name } : shift;
+        }
+        if (shift.id.toString() === targetShiftId) {
+          const draggedShift = shiftsList.find((s) => s.id.toString() === draggedShiftId);
+          return draggedShift ? { ...shift, name: draggedShift.name } : shift;
+        }
+        return shift;
+      });
     };
   
     if (week === 'Current Week') {
-      setShifts((prev) => updateShifts(prev) || []);
+      setShifts((prev) => swapShiftNames(prev) || []);
     } else {
-      setNextWeekShifts((prev) => updateShifts(prev) || []);
+      setNextWeekShifts((prev) => swapShiftNames(prev) || []);
     }
   };
-  
+
 
   // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
   if (loading) {
