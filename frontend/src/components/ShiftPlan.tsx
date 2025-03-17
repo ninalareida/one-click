@@ -87,22 +87,33 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
 
   const handleDrop = (event: DragEndEvent) => {
     const { active, over } = event;
-
+  
     console.log('Drag End Event:', event);
-
-    if (over) {
-      const droppedDay = over.id.toString();
-      console.log(`Shift ${active.id} dropped onto ${droppedDay}`);
-
-      setShifts((prevShifts) =>
-        prevShifts.map((shift) =>
-          shift.id.toString() === active.id ? { ...shift, day: droppedDay } : shift
-        )
-      );
-    } else {
+  
+    if (!over) {
       console.log('No drop target (over) found.');
+      return;
+    }
+  
+    const droppedDay = over.id.toString();
+    console.log(`Shift ${active.id} dropped onto ${droppedDay}`);
+  
+    // Update shifts for the correct week
+    const updateShifts = (prevShifts: ShiftData[] | null) => {
+      if (!prevShifts) return prevShifts; // Prevent updating null state
+  
+      return prevShifts.map((shift) =>
+        shift.id.toString() === active.id ? { ...shift, day: droppedDay } : shift
+      );
+    };
+  
+    if (week === 'Current Week') {
+      setShifts((prev) => updateShifts(prev) || []);
+    } else {
+      setNextWeekShifts((prev) => updateShifts(prev) || []);
     }
   };
+  
 
   // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
   if (loading) {
