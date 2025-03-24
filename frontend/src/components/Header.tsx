@@ -9,7 +9,6 @@ const Header = ({ selectedWeek, setSelectedWeek }: HeaderProps) => {
 
   return (
     <header className="header">
-      <img src={logoImage} alt="Logo" className="logo" />
       <div className="week-selector">
         <span className="selected-week">{selectedWeek}</span>
         <button 
@@ -35,6 +34,8 @@ const Header = ({ selectedWeek, setSelectedWeek }: HeaderProps) => {
           </ul>
         )}
       </div>
+
+      <img src={logoImage} alt="Logo" className="logo" />
     </header>
   );
 };
