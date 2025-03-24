@@ -40,6 +40,7 @@ const Shift = (props: ShiftProps) => {
       {...listeners}
       {...attributes}
       className={`shift ${isDragging ? 'dragging' : ''}`}
+      data-type={props.shiftType}
     >
       <FontAwesomeIcon icon={getIconForShiftType()} className="shift-icon" />
       <p className="employee-name">{props.name}</p>
