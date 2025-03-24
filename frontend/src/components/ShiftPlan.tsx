@@ -138,7 +138,7 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
         {week === 'Current Week' && (
           <div className="ai-button-container">
             <AIGenerateButton label="Regenerate Current Week with AI" onClick={() => handleGenerateAIPlan('Current Week')} />
-            <AIGenerateButton label="Generate Next Week with AI" onClick={() => handleGenerateAIPlan('Next Week')} />
+            { /** <AIGenerateButton label="Generate Next Week with AI" onClick={() => handleGenerateAIPlan('Next Week')} /> */ }
           </div>
         )}
         {week === 'Next Week' && (
