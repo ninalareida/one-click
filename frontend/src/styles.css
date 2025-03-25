@@ -284,8 +284,8 @@ body {
 }
 
 .ai-generate-button {
-  background-color: #6366f1;
-  color: white;
+  background-color: #abc5d5;
+  color: black;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   border: none;
@@ -299,7 +299,7 @@ body {
 }
 
 .ai-generate-button:hover {
-  background-color: #4f46e5;
+  background-color: #b3a56c;
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
