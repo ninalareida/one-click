@@ -30,6 +30,7 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
   const [error, setError] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   //const [loadingWeek, setLoadingWeek] = useState<string | null>(null);
+  const [confirmationMessage, setConfirmationMessage] = useState<string | null>(null);
 
   // useEffect-Hook holt Schichtdaten und verfügbare Tage beim ersten Laden ab
   useEffect(() => {
@@ -54,8 +55,7 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
     fetchData();
   }, []);
 
-  
-  //Schichtplangenerierung
+  // Schichtplangenerierung
   const handleGenerateAIPlan = async (targetWeek: 'Next Week' | 'Current Week') => {
     try {
       setIsGenerating(true);
@@ -63,12 +63,18 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
 
       if (response.success && response.data) {
         const parsedData = typeof response.data === 'string' ? JSON.parse(response.data) : response.data;
-        
+
         if (targetWeek === 'Next Week') {
           setNextWeekShifts(parsedData);
         } else {
           setShifts(parsedData);
         }
+
+        // Show confirmation message when AI shift plan is successfully generated
+        setConfirmationMessage(`AI shift plan for ${targetWeek} has been successfully generated!`);
+
+        // Hide message after 10 seconds
+        setTimeout(() => setConfirmationMessage(null), 10000);
       } else {
         setError('Fehler bei der KI-Schichtplangenerierung.');
       }
@@ -87,19 +93,19 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
 
   const handleDrop = (event: DragEndEvent) => {
     const { active, over } = event;
-  
+
     if (!over) return;
-  
+
     const draggedShiftId = active.id.toString();
     const targetShiftId = over.id.toString();
-  
+
     if (draggedShiftId === targetShiftId) return;
-  
+
     console.log(`Swapping shift names: ${draggedShiftId} ↔ ${targetShiftId}`);
-  
+
     const swapShiftNames = (shiftsList: ShiftData[] | null) => {
       if (!shiftsList) return shiftsList;
-  
+
       return shiftsList.map((shift) => {
         if (shift.id.toString() === draggedShiftId) {
           const targetShift = shiftsList.find((s) => s.id.toString() === targetShiftId);
@@ -112,14 +118,13 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
         return shift;
       });
     };
-  
+
     if (week === 'Current Week') {
       setShifts((prev) => swapShiftNames(prev) || []);
     } else {
       setNextWeekShifts((prev) => swapShiftNames(prev) || []);
     }
   };
-
 
   // Anzeige einer Lade-Nachricht, während die Daten abgerufen werden
   if (loading) {
@@ -135,6 +140,9 @@ const ShiftPlan = ({ week }: ShiftPlanProps) => {
   return (
     <DndContext onDragEnd={handleDrop}>
       <div className="schedule-container">
+        {confirmationMessage && (
+          <div className="confirmation-message">{confirmationMessage}</div>
+        )}
         {week === 'Current Week' && (
           <div className="ai-button-container">
             <AIGenerateButton label="Regenerate Current Week with AI" onClick={() => handleGenerateAIPlan('Current Week')} />
